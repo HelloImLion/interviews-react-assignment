@@ -12,23 +12,10 @@ import {
 } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-import { HeavyComponent } from "./HeavyComponent.tsx";
+import { HeavyComponent } from "../../components/HeavyComponent/HeavyComponent.tsx";
+import { Product } from "../../types/Product.tsx";
+import { Cart } from "../../types/Cart.tsx";
 
-export type Product = {
-	id: number;
-	name: string;
-	imageUrl: string;
-	price: number;
-	category: string;
-	itemInCart: number;
-	loading: boolean;
-};
-
-export type Cart = {
-	items: Product[];
-	totalPrice: number;
-	totalItems: number;
-};
 export const Products = ({ onCartChange }: { onCartChange: (cart: Cart) => void }) => {
 	const [products, setProducts] = useState<Product[]>([]);
 
