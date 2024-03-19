@@ -1,4 +1,5 @@
-import { Box, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Box } from "@mui/material";
+import { ListWrapper } from "../../components/ListWrapper/ListWrapper";
 
 const drawerWidth = 180;
 
@@ -12,18 +13,7 @@ export const Categories = () => {
 				borderRight: "1px solid grey",
 			}}
 		>
-			<List>
-				{categories.map((text) => (
-					<ListItem
-						key={text}
-						disablePadding
-					>
-						<ListItemButton>
-							<ListItemText primary={text} />
-						</ListItemButton>
-					</ListItem>
-				))}
-			</List>
+			<ListWrapper items={categories.map((s) => ({ label: s, onClick: () => {} }))} />
 		</Box>
 	);
 };
