@@ -1,15 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Product } from "../types/Product.tsx";
 import { AddToCartRequestDTO } from "../types/dto/AddToCartRequestDTO.ts";
-import { fetchProducts } from "../services/fetchProducts.ts";
+import { ProductsRequestDTO } from "../types/dto/ProductsRequestDTO.ts";
+import { usePagination } from "./usePagination.tsx";
+import { PaginatedResult } from "../types/PaginatedResult.ts";
 
 export type UseProductProps = {
 	addProductToCart: (cart: AddToCartRequestDTO) => Promise<void>;
+	fetchProducts: (products: ProductsRequestDTO) => Promise<PaginatedResult<Product>>;
+	chunkSize: number;
 };
 
 export type UseProductState = {
 	products: Product[];
 	addToCart: (productId: number, quantity: number) => void;
+	fetchNewProducts: () => void;
 };
 
 type ProductLoadingStateParams = {
@@ -44,11 +49,15 @@ function endProductLoadingState(products: Product[], { idToFind, quantity }: Pro
 	});
 }
 
-export function useProduct({ addProductToCart }: UseProductProps): UseProductState {
-	const [products, setProducts] = useState<Product[]>([]);
+export function useProduct({ addProductToCart, fetchProducts, chunkSize }: UseProductProps): UseProductState {
+	const {
+		data: products,
+		setData: setProducts,
+		fetchData,
+	} = usePagination({ fetchDataFunction: fetchProducts, chunkSize });
 
 	useEffect(() => {
-		fetchProducts().then((products) => setProducts(products));
+		fetchData();
 	}, []);
 
 	async function addToCart(productId: number, quantity: number) {
@@ -60,5 +69,9 @@ export function useProduct({ addProductToCart }: UseProductProps): UseProductSta
 		setProducts(productsWithLoadingOff);
 	}
 
-	return { products, addToCart };
+	function fetchNewProducts() {
+		fetchData();
+	}
+
+	return { products, addToCart, fetchNewProducts };
 }

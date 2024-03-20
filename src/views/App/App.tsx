@@ -1,4 +1,4 @@
-import { Products } from "./Products.tsx";
+import { ConnectedProducts } from "./Products.tsx";
 import { Box, CssBaseline } from "@mui/material";
 import { Categories } from "./Categories.tsx";
 import { CartProvider } from "../../context/useCart.tsx";
@@ -21,7 +21,7 @@ function App() {
 				>
 					<Categories />
 					<Box flex={1}>
-						<Products />
+						<ConnectedProducts />
 					</Box>
 				</Box>
 			</Box>
