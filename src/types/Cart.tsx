@@ -1,7 +1,7 @@
-import { Product } from "./Product.tsx";
+import { CartItem } from "./CartItem.ts";
 
 export type Cart = {
-	items: Product[];
+	items: CartItem[];
 	totalPrice: number;
 	totalItems: number;
 };

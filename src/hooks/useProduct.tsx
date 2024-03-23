@@ -77,12 +77,9 @@ export function useProduct({
 	}, [productSearchParams]);
 
 	async function addToCart(productId: number, quantity: number) {
-		// TODO: Find a better name
-		const productsWithActiveLoading = startProductLoadingState(products ?? [], productId);
-		setProducts(productsWithActiveLoading);
+		setProducts((products) => startProductLoadingState(products ?? [], productId));
 		await addProductToCart({ productId, quantity });
-		const productsWithLoadingOff = endProductLoadingState(products ?? [], { idToFind: productId, quantity });
-		setProducts(productsWithLoadingOff);
+		setProducts((products) => endProductLoadingState(products ?? [], { idToFind: productId, quantity }));
 	}
 
 	function fetchNewProducts() {

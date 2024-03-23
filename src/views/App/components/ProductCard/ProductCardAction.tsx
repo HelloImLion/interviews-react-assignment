@@ -2,8 +2,28 @@ import { Box, IconButton, Typography, CircularProgress } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { ProductCardProps } from "./ProductCard.tsx";
+import { useDebounce } from "../../../../hooks/useDebounce.tsx";
+import { useEffect, useState } from "react";
+import { useCart } from "../../../../context/useCart.tsx";
 
 export function ProductCardAction({ addToCart, product }: ProductCardProps) {
+	const { debounce } = useDebounce({ msDelay: 500 });
+	const { productQuantityMap } = useCart();
+	const [productQuantity, setProductQuantity] = useState<number>(0);
+
+	useEffect(() => {
+		if (product.loading === false) {
+			setProductQuantity(0);
+		}
+	}, [product.loading]);
+
+	function requestAddToCart(quantity: number) {
+		setProductQuantity((pq) => pq + quantity);
+		debounce(() => addToCart(product.id, productQuantity + quantity));
+	}
+
+	const productAmountInCart = (productQuantityMap.get(product.id) || 0) + productQuantity;
+
 	return (
 		<Box
 			position="relative"
@@ -22,10 +42,10 @@ export function ProductCardAction({ addToCart, product }: ProductCardProps) {
 				{product.loading && <CircularProgress size={20} />}
 			</Box>
 			<IconButton
-				disabled={product.loading}
+				disabled={product.loading || productAmountInCart === 0}
 				aria-label="delete"
 				size="small"
-				onClick={() => addToCart(product.id, -1)}
+				onClick={() => requestAddToCart(-1)}
 			>
 				<RemoveIcon fontSize="small" />
 			</IconButton>
@@ -35,14 +55,14 @@ export function ProductCardAction({ addToCart, product }: ProductCardProps) {
 				component="div"
 				mx={1}
 			>
-				{product.itemInCart || 0}
+				{productAmountInCart}
 			</Typography>
 
 			<IconButton
 				disabled={product.loading}
 				aria-label="add"
 				size="small"
-				onClick={() => addToCart(product.id, 1)}
+				onClick={() => requestAddToCart(1)}
 			>
 				<AddIcon fontSize="small" />
 			</IconButton>
