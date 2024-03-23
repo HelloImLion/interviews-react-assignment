@@ -1,11 +1,17 @@
 import { Box } from "@mui/material";
 import { ListWrapper } from "../../components/ListWrapper/ListWrapper";
+import { Dispatch, SetStateAction } from "react";
 
 const drawerWidth = 180;
 
 const categories = ["Fruit", "Vegetables", "Dairy", "Bakery", "Meat", "Seafood", "Snacks", "Beverages"];
 
-export const Categories = () => {
+type CategoriesProps = {
+	activeCategory: string;
+	setActiveCategory: Dispatch<SetStateAction<string>>;
+};
+
+export const Categories = ({ setActiveCategory, activeCategory }: CategoriesProps) => {
 	return (
 		<Box
 			minWidth={drawerWidth}
@@ -13,7 +19,13 @@ export const Categories = () => {
 				borderRight: "1px solid grey",
 			}}
 		>
-			<ListWrapper items={categories.map((s) => ({ label: s, onClick: () => {} }))} />
+			<ListWrapper
+				items={categories.map((s) => ({
+					label: s,
+					onClick: () => setActiveCategory(s),
+					isActive: s === activeCategory,
+				}))}
+			/>
 		</Box>
 	);
 };

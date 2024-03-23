@@ -3,6 +3,7 @@ import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 type ListItemWrapperProps = {
 	label: string;
 	onClick: () => void;
+	isActive: boolean;
 };
 
 export type ListWrapperProps = {
@@ -12,11 +13,15 @@ export type ListWrapperProps = {
 export function ListWrapper({ items }: ListWrapperProps) {
 	return (
 		<List className="list-wrapper">
-			{items.map(({ label }) => (
+			{items.map(({ label, isActive, onClick }) => (
 				<ListItem
-					className="list-wrapper__list-item"
+					className={"list-wrapper__list-item"}
 					key={label}
 					disablePadding
+					onClick={onClick}
+					sx={{
+						background: isActive ? "rgba(25, 118, 210, 0.2)" : "",
+					}}
 				>
 					<ListItemButton>
 						<ListItemText primary={label} />

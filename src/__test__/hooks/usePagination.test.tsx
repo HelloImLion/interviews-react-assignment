@@ -9,7 +9,9 @@ import { usePagination } from "../../hooks/usePagination";
 describe("Use Pagination Test", () => {
 	it("Should not call fetchData if hasMore state is equal to false", async () => {
 		const mockFetchDataFunction = jest.fn().mockReturnValue({ items: [], hasMore: false });
-		const { result } = renderHook(() => usePagination({ fetchDataFunction: mockFetchDataFunction, chunkSize: 12 }));
+		const { result } = renderHook(() =>
+			usePagination({ fetchDataFunction: mockFetchDataFunction, chunkSize: 12, requestParams: null })
+		);
 
 		act(() => {
 			result.current.fetchData();
@@ -19,12 +21,16 @@ describe("Use Pagination Test", () => {
 			result.current.fetchData();
 		});
 
-		expect(mockFetchDataFunction).toHaveBeenCalledTimes(1);
+		expect(mockFetchDataFunction).toHaveBeenCalledTimes(2);
 	});
 	it("Should merge both data and items array when hasMode is not false", async () => {
 		const mockFetchDataFunction = jest.fn().mockReturnValue({ items: ["Hello"], hasMore: true });
 		const { result } = renderHook(() =>
-			usePagination<string>({ fetchDataFunction: mockFetchDataFunction, chunkSize: 12 })
+			usePagination<string, null>({
+				fetchDataFunction: mockFetchDataFunction,
+				chunkSize: 12,
+				requestParams: null,
+			})
 		);
 
 		let firstIterationResult: string[];

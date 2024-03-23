@@ -6,11 +6,11 @@ const mockOnClick = jest.fn();
 
 const listItems: ListWrapperProps = {
 	items: [
-		{ label: "Item1", onClick: mockOnClick },
-		{ label: "Item2", onClick: mockOnClick },
-		{ label: "Item3", onClick: mockOnClick },
-		{ label: "Item4", onClick: mockOnClick },
-		{ label: "Item5", onClick: mockOnClick },
+		{ label: "Item1", onClick: mockOnClick, isActive: false },
+		{ label: "Item2", onClick: mockOnClick, isActive: false },
+		{ label: "Item3", onClick: mockOnClick, isActive: false },
+		{ label: "Item4", onClick: mockOnClick, isActive: false },
+		{ label: "Item5", onClick: mockOnClick, isActive: false },
 	],
 };
 
@@ -20,7 +20,6 @@ describe("ListWrapper", () => {
 		const lastIndex = listItems.items.length - 1;
 		const lastItem = listItems.items[lastIndex].label;
 		const childNodes = component.container.firstChild?.childNodes ?? [];
-
 		expect(childNodes[lastIndex].textContent).toBe(lastItem);
 	});
 });

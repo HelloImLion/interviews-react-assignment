@@ -7,9 +7,16 @@ import { Badge } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useCart } from "../../../../context/useCart";
 import { Search, SearchIconWrapper, StyledInputBase } from "./styled";
+import { Dispatch, SetStateAction } from "react";
+import { useDebounce } from "../../../../hooks/useDebounce";
 
-export default function SearchAppBar() {
+type SearchBarProps = {
+	setSearchValue: Dispatch<SetStateAction<string>>;
+};
+
+export default function SearchAppBar({ setSearchValue }: SearchBarProps) {
 	const { cart } = useCart();
+	const { debounce } = useDebounce({ msDelay: 500 });
 
 	return (
 		<Box>
@@ -34,6 +41,7 @@ export default function SearchAppBar() {
 							<SearchIcon />
 						</SearchIconWrapper>
 						<StyledInputBase
+							onChange={(e) => debounce(() => setSearchValue(e.target.value))}
 							placeholder="Search…"
 							inputProps={{
 								"aria-label": "search",

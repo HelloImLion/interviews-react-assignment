@@ -8,19 +8,33 @@ import { useState, useEffect } from "react";
 import { ProductsRequestDTO } from "../../types/dto/ProductsRequestDTO.ts";
 import { PaginatedResult } from "../../types/PaginatedResult.ts";
 import { Product } from "../../types/Product.tsx";
+import { ProductSearchRequestParams } from "../../types/ProductSearchRequestParams.tsx";
 
 type ProductsProps = {
-	fetchProducts: (params: ProductsRequestDTO) => Promise<PaginatedResult<Product>>;
+	fetchProducts: (
+		params: ProductsRequestDTO,
+		searchParams?: ProductSearchRequestParams
+	) => Promise<PaginatedResult<Product>>;
+	productSearchParams: ProductSearchRequestParams;
 };
-function withProductConnection(Child: React.ComponentType<ProductsProps>) {
-	const propsToPass: ProductsProps = { fetchProducts };
+
+function withProductConnection(
+	Child: React.ComponentType<ProductsProps>,
+	productSearchParams: ProductSearchRequestParams
+) {
+	const propsToPass: ProductsProps = { fetchProducts, productSearchParams };
 
 	return <Child {...propsToPass} />;
 }
 
-export const Products = ({ fetchProducts }: ProductsProps) => {
+export const Products = ({ fetchProducts, productSearchParams }: ProductsProps) => {
 	const { addProductToCart } = useCart();
-	const { products, addToCart, fetchNewProducts } = useProduct({ addProductToCart, fetchProducts, chunkSize: 12 });
+	const { products, addToCart, fetchNewProducts } = useProduct({
+		addProductToCart,
+		fetchProducts,
+		chunkSize: 12,
+		productSearchParams,
+	});
 	const [isAtEnd, setIsAtEnd] = useState<boolean>(false);
 
 	function handleScroll() {
@@ -72,6 +86,6 @@ export const Products = ({ fetchProducts }: ProductsProps) => {
 	);
 };
 
-export function ConnectedProducts() {
-	return withProductConnection(Products);
+export function ConnectedProducts(productSearchParams: ProductSearchRequestParams) {
+	return withProductConnection(Products, productSearchParams);
 }
