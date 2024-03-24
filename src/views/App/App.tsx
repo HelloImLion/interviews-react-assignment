@@ -4,10 +4,14 @@ import { Categories } from "./Categories.tsx";
 import { CartProvider } from "../../context/useCart.tsx";
 import SearchAppBar from "./components/SearchAppBar/SearchAppBar.tsx";
 import { useState } from "react";
+import { CheckoutModal } from "./CheckoutModal/CheckoutModal.tsx";
+import { OrderStateModal } from "./OrderStateModal/OrderStateModal.tsx";
 
 function App() {
 	const [activeCategory, setActiveCategory] = useState<string>("");
 	const [searchValue, setSearchValue] = useState<string>("");
+
+	const [openModalState, setOpenModalState] = useState<string>("");
 
 	return (
 		<CartProvider>
@@ -17,7 +21,10 @@ function App() {
 				flexDirection="column"
 			>
 				<CssBaseline />
-				<SearchAppBar setSearchValue={setSearchValue} />
+				<SearchAppBar
+					setSearchValue={setSearchValue}
+					setOpenModalState={setOpenModalState}
+				/>
 				<Box
 					flex={1}
 					display="flex"
@@ -35,6 +42,11 @@ function App() {
 					</Box>
 				</Box>
 			</Box>
+			<CheckoutModal
+				isOpen={openModalState === "checkout"}
+				onClose={() => setOpenModalState("")}
+			/>
+			<OrderStateModal />
 		</CartProvider>
 	);
 }

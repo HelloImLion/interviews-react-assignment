@@ -1,6 +1,6 @@
-import { Box } from "@mui/material";
 import { ListWrapper } from "../../components/ListWrapper/ListWrapper";
 import { Dispatch, SetStateAction } from "react";
+import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 
 const drawerWidth = 180;
 
@@ -13,9 +13,9 @@ type CategoriesProps = {
 
 export const Categories = ({ setActiveCategory, activeCategory }: CategoriesProps) => {
 	return (
-		<Box
-			minWidth={drawerWidth}
-			sx={{
+		<BoxWrapper
+			style={{
+				minWidth: drawerWidth,
 				borderRight: "1px solid grey",
 			}}
 		>
@@ -26,6 +26,6 @@ export const Categories = ({ setActiveCategory, activeCategory }: CategoriesProp
 					isActive: s === activeCategory,
 				}))}
 			/>
-		</Box>
+		</BoxWrapper>
 	);
 };

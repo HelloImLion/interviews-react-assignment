@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import SearchIcon from "@mui/icons-material/Search";
-import { Badge } from "@mui/material";
+import { Badge, IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useCart } from "../../../../context/useCart";
 import { Search, SearchIconWrapper, StyledInputBase } from "./styled";
@@ -12,9 +12,10 @@ import { useDebounce } from "../../../../hooks/useDebounce";
 
 type SearchBarProps = {
 	setSearchValue: Dispatch<SetStateAction<string>>;
+	setOpenModalState: Dispatch<SetStateAction<string>>;
 };
 
-export default function SearchAppBar({ setSearchValue }: SearchBarProps) {
+export default function SearchAppBar({ setSearchValue, setOpenModalState }: SearchBarProps) {
 	const { cart } = useCart();
 	const { debounce } = useDebounce({ msDelay: 500 });
 
@@ -22,6 +23,7 @@ export default function SearchAppBar({ setSearchValue }: SearchBarProps) {
 		<Box>
 			<AppBar position="relative">
 				<Toolbar>
+					<Box sx={{ maxWidth: 0, maxHeight: 0, overflow: "hidden" }}></Box>
 					<Typography
 						variant="h6"
 						noWrap
@@ -73,7 +75,9 @@ export default function SearchAppBar({ setSearchValue }: SearchBarProps) {
 						badgeContent={cart.totalItems || 0}
 						color="secondary"
 					>
-						<ShoppingCartIcon />
+						<IconButton onClick={() => setOpenModalState("checkout")}>
+							<ShoppingCartIcon />
+						</IconButton>
 					</Badge>
 				</Toolbar>
 			</AppBar>
