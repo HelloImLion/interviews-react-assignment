@@ -1,11 +1,12 @@
 import { ConnectedProducts } from "./Products.tsx";
-import { Box, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { Categories } from "./Categories.tsx";
 import { CartProvider } from "../../context/useCart.tsx";
 import SearchAppBar from "./components/SearchAppBar/SearchAppBar.tsx";
 import { useState } from "react";
-import { CheckoutModal } from "./CheckoutModal/CheckoutModal.tsx";
-import { OrderStateModal } from "./OrderStateModal/OrderStateModal.tsx";
+import { CheckoutModal } from "./components/CheckoutModal/CheckoutModal.tsx";
+import { OrderStateModal } from "./components/OrderStateModal/OrderStateModal.tsx";
+import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper.tsx";
 
 function App() {
 	const [activeCategory, setActiveCategory] = useState<string>("");
@@ -15,33 +16,41 @@ function App() {
 
 	return (
 		<CartProvider>
-			<Box
-				height="100vh"
-				display="flex"
-				flexDirection="column"
+			<BoxWrapper
+				style={{
+					display: "flex",
+					height: "100vh",
+					flexDirection: "column",
+				}}
 			>
 				<CssBaseline />
 				<SearchAppBar
 					setSearchValue={setSearchValue}
 					setOpenModalState={setOpenModalState}
 				/>
-				<Box
-					flex={1}
-					display="flex"
-					flexDirection="row"
+				<BoxWrapper
+					style={{
+						flex: 1,
+						display: "flex",
+						flexDirection: "row",
+					}}
 				>
 					<Categories
 						setActiveCategory={setActiveCategory}
 						activeCategory={activeCategory}
 					/>
-					<Box flex={1}>
+					<BoxWrapper
+						style={{
+							flex: 1,
+						}}
+					>
 						<ConnectedProducts
 							activeCategory={activeCategory}
 							searchValue={searchValue}
 						/>
-					</Box>
-				</Box>
-			</Box>
+					</BoxWrapper>
+				</BoxWrapper>
+			</BoxWrapper>
 			<CheckoutModal
 				isOpen={openModalState === "checkout"}
 				onClose={() => setOpenModalState("")}

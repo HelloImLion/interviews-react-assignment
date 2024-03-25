@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { HeavyComponent } from "../../components/HeavyComponent/HeavyComponent.tsx";
 import { ProductCard } from "./components/ProductCard/ProductCard.tsx";
 import { useProduct } from "../../hooks/useProduct.tsx";
@@ -9,6 +9,7 @@ import { ProductsRequestDTO } from "../../types/dto/ProductsRequestDTO.ts";
 import { PaginatedResult } from "../../types/PaginatedResult.ts";
 import { Product } from "../../types/Product.tsx";
 import { ProductSearchRequestParams } from "../../types/ProductSearchRequestParams.tsx";
+import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper.tsx";
 
 type ProductsProps = {
 	fetchProducts: (
@@ -59,9 +60,11 @@ export const Products = ({ fetchProducts, productSearchParams }: ProductsProps) 
 	}, [isAtEnd, fetchNewProducts]);
 
 	return (
-		<Box
-			overflow="scroll"
-			height="100%"
+		<BoxWrapper
+			style={{
+				height: "100%",
+				overflow: "scroll",
+			}}
 		>
 			<Grid
 				container
@@ -82,7 +85,7 @@ export const Products = ({ fetchProducts, productSearchParams }: ProductsProps) 
 					</Grid>
 				))}
 			</Grid>
-		</Box>
+		</BoxWrapper>
 	);
 };
 

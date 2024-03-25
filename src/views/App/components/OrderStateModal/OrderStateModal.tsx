@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { ModalWrapper } from "../../../components/ModalWrapper/ModalWrapper";
-import { TypographyWrapper } from "../../../components/TypographyWrapper/TypographyWrapper";
+import { ModalWrapper } from "../../../../components/ModalWrapper/ModalWrapper";
+import { TypographyWrapper } from "../../../../components/TypographyWrapper/TypographyWrapper";
 
 function getParamsFromUrl(paramName: string) {
 	const search = window.location.search;

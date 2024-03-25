@@ -1,5 +1,5 @@
-import { useCart } from "../../../context/useCart";
-import { CartItem } from "../../../types/CartItem";
+import { useCart } from "../../../../context/useCart";
+import { CartItem } from "../../../../types/CartItem";
 import { CheckoutItem } from "./CheckoutItem";
 
 export function OrderDetailsList() {

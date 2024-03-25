@@ -1,6 +1,6 @@
 import { Product } from "../Product";
-import { PaginatedResponseDTO } from "./PaginatedResponseDTO";
+import { PaginatedResponse } from "../PaginatedResponse";
 
 export type ProductsResponseDTO = {
 	products: Product[];
-} & PaginatedResponseDTO;
+} & PaginatedResponse;

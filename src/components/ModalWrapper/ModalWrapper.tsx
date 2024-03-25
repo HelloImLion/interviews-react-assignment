@@ -1,5 +1,7 @@
-import { Box, Modal, Typography } from "@mui/material";
-import { ReactElement } from "react";
+import { Modal } from "@mui/material";
+import { CSSProperties, ReactElement } from "react";
+import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
+import { TypographyWrapper } from "../TypographyWrapper/TypographyWrapper";
 
 type ModalWrapperProps = {
 	isOpen: boolean;
@@ -8,18 +10,17 @@ type ModalWrapperProps = {
 	onClose: () => void;
 };
 
-const style = {
+const style: CSSProperties = {
 	position: "absolute",
 	top: "50%",
 	left: "50%",
 	transform: "translate(-50%, -50%)",
 	width: 400,
-	bgcolor: "white !important",
+	backgroundColor: "white !important",
 	borderRadius: "0.5rem",
 	boxShadow: "black  2px",
-	pt: 2,
-	px: 4,
-	pb: 3,
+	padding: "1.5rem",
+	paddingBottom: "0.5rem",
 };
 
 type ModalTitleProps = {
@@ -28,13 +29,15 @@ type ModalTitleProps = {
 
 function ModalTitle({ title }: ModalTitleProps) {
 	return (
-		<Typography
-			marginBottom={"1rem"}
-			fontWeight={600}
-			fontSize={"1.5rem"}
+		<TypographyWrapper
+			style={{
+				marginBottom: "1rem",
+				fontWeight: 600,
+				fontSize: "1.5rem",
+			}}
 		>
 			{title}
-		</Typography>
+		</TypographyWrapper>
 	);
 }
 
@@ -44,10 +47,10 @@ export function ModalWrapper({ isOpen, onClose, children: modalBody, title }: Mo
 			open={isOpen}
 			onClose={onClose}
 		>
-			<Box sx={style}>
+			<BoxWrapper style={style}>
 				<ModalTitle title={title} />
 				{modalBody}
-			</Box>
+			</BoxWrapper>
 		</Modal>
 	);
 }

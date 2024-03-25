@@ -1,7 +1,9 @@
 import { useEffect, useRef } from "react";
 import { Typography } from "@mui/material";
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
-import { useCart } from "../../../context/useCart";
+import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
+import { useCart } from "../../../../context/useCart";
+import { config } from "../../../../config/config";
+import { TypographyWrapper } from "../../../../components/TypographyWrapper/TypographyWrapper";
 
 export function CheckoutBillingLoading() {
 	const { cart } = useCart();
@@ -16,7 +18,7 @@ export function CheckoutBillingLoading() {
 
 	return (
 		<div>
-			<Typography>Redirecting to Payment Processing Page</Typography>
+			<TypographyWrapper>Redirecting to Payment Processing Page</TypographyWrapper>
 			<BoxWrapper
 				style={{
 					maxWidth: 0,
@@ -25,7 +27,7 @@ export function CheckoutBillingLoading() {
 				}}
 			>
 				<form
-					action="http://localhost:3001/checkout"
+					action={config.PAYMENT_API.BASE_URL + config.PAYMENT_API.CHECKOUT_ENDPOINT}
 					method="POST"
 				>
 					<input

@@ -1,4 +1,4 @@
-export type PaginatedResponseDTO = {
+export type PaginatedResponse = {
 	total: number;
 	hasMore: boolean;
 };

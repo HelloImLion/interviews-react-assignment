@@ -1,10 +1,23 @@
 import { Typography } from "@mui/material";
+import { DefaultComponentProps, OverridableTypeMap } from "@mui/material/OverridableComponent";
 import { CSSProperties, PropsWithChildren } from "react";
 
-type TypographyWrapperProps = {
+type TypographyWrapperProps<T extends OverridableTypeMap> = {
 	style?: CSSProperties;
-} & PropsWithChildren;
+} & PropsWithChildren &
+	DefaultComponentProps<T>;
 
-export function TypographyWrapper({ style, children }: TypographyWrapperProps) {
-	return <Typography sx={style}>{children}</Typography>;
+export function TypographyWrapper<T extends OverridableTypeMap>({
+	style,
+	children,
+	...props
+}: TypographyWrapperProps<T>) {
+	return (
+		<Typography
+			sx={style}
+			{...props}
+		>
+			{children}
+		</Typography>
+	);
 }

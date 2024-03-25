@@ -5,6 +5,8 @@ import { ProductCardProps } from "./ProductCard.tsx";
 import { useDebounce } from "../../../../hooks/useDebounce.tsx";
 import { useEffect, useState } from "react";
 import { useCart } from "../../../../context/useCart.tsx";
+import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper.tsx";
+import { TypographyWrapper } from "../../../../components/TypographyWrapper/TypographyWrapper.tsx";
 
 export function ProductCardAction({ addToCart, product }: ProductCardProps) {
 	const { debounce } = useDebounce({ msDelay: 500 });
@@ -25,22 +27,26 @@ export function ProductCardAction({ addToCart, product }: ProductCardProps) {
 	const productAmountInCart = (productQuantityMap.get(product.id) || 0) + productQuantity;
 
 	return (
-		<Box
-			position="relative"
-			display="flex"
-			flexDirection="row"
-			alignItems="center"
+		<BoxWrapper
+			style={{
+				position: "relative",
+				display: "flex",
+				flexDirection: "row",
+				alignItems: "center",
+			}}
 		>
-			<Box
-				position="absolute"
-				left={0}
-				right={0}
-				top={0}
-				bottom={0}
-				textAlign="center"
+			<BoxWrapper
+				style={{
+					position: "absolute",
+					left: "0",
+					right: "0",
+					top: "0",
+					bottom: "0",
+					textAlign: "center",
+				}}
 			>
 				{product.loading && <CircularProgress size={20} />}
-			</Box>
+			</BoxWrapper>
 			<IconButton
 				disabled={product.loading || productAmountInCart === 0}
 				aria-label="delete"
@@ -50,13 +56,13 @@ export function ProductCardAction({ addToCart, product }: ProductCardProps) {
 				<RemoveIcon fontSize="small" />
 			</IconButton>
 
-			<Typography
+			<TypographyWrapper
 				variant="body1"
 				component="div"
 				mx={1}
 			>
 				{productAmountInCart}
-			</Typography>
+			</TypographyWrapper>
 
 			<IconButton
 				disabled={product.loading}
@@ -66,6 +72,6 @@ export function ProductCardAction({ addToCart, product }: ProductCardProps) {
 			>
 				<AddIcon fontSize="small" />
 			</IconButton>
-		</Box>
+		</BoxWrapper>
 	);
 }

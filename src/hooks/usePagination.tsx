@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { PaginatedRequestDTO } from "../types/dto/PaginatedRequestDTO";
+import { PaginatedRequest } from "../types/PaginatedRequest";
 import { PaginatedResult } from "../types/PaginatedResult";
 
 interface UsePaginationProps<T, K> {
-	fetchDataFunction: (paginationParams: PaginatedRequestDTO, requestParams?: K) => Promise<PaginatedResult<T>>;
+	fetchDataFunction: (paginationParams: PaginatedRequest, requestParams?: K) => Promise<PaginatedResult<T>>;
 	requestParams?: K;
 	chunkSize: number;
 }

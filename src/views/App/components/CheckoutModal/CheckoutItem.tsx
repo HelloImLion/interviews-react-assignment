@@ -1,5 +1,5 @@
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
-import { TypographyWrapper } from "../../../components/TypographyWrapper/TypographyWrapper";
+import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
+import { TypographyWrapper } from "../../../../components/TypographyWrapper/TypographyWrapper";
 
 type CheckoutItemProps = {
 	name: string;

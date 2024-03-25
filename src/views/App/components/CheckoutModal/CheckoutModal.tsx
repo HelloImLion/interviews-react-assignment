@@ -1,15 +1,15 @@
-import { ModalWrapper } from "../../../components/ModalWrapper/ModalWrapper";
+import { ModalWrapper } from "../../../../components/ModalWrapper/ModalWrapper";
 import { Fragment } from "react";
 import { DeliveryForm } from "./DeliveryForm";
 import { OrderDetailsList } from "./OrderDetailsList";
 import { CheckoutSummaryDetails } from "./CheckoutSummaryDetails";
-import { TextButton } from "../../../components/TextButton/TextButton";
+import { TextButton } from "../../../../components/TextButton/TextButton";
 import { CheckoutBillingLoading } from "./CheckoutBillingLoading";
-import { CheckoutModalPages } from "../../../enum/CheckoutModalPages";
+import { CheckoutModalPages } from "../../../../enum/CheckoutModalPages";
 import { UseCheckoutState, useCheckout } from "./hooks/useCheckout";
-import useValidation from "../../../hooks/useValidation";
-import Joi, { ValidationError } from "joi";
-import { deliveryFormSchema } from "../../../validation/deliveryFormSchema";
+import useValidation from "../../../../hooks/useValidation";
+import { ValidationError } from "joi";
+import { deliveryFormSchema } from "../../../../validation/deliveryFormSchema";
 
 type CheckoutModalProps = {
 	isOpen: boolean;

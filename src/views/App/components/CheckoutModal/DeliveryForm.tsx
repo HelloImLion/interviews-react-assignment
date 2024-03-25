@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
-import { DeliveryFormValues } from "../../../types/DeliveryFormValues";
-import { FormChangeEvent } from "../../../types/FormChangeEvent";
-import { RadioGroupInput } from "../../../components/RadioGroupInput/RadioGroupInput";
-import { TextFieldInput } from "../../../components/TextFieldInput/TextFieldInput";
+import { DeliveryFormValues } from "../../../../types/DeliveryFormValues";
+import { FormChangeEvent } from "../../../../types/FormChangeEvent";
+import { RadioGroupInput } from "../../../../components/RadioGroupInput/RadioGroupInput";
+import { TextFieldInput } from "../../../../components/TextFieldInput/TextFieldInput";
 import { ValidationError } from "joi";
-import { getMessageFromError } from "../../../utils/getMessageFromError";
+import { getMessageFromError } from "../../../../utils/getMessageFromError";
 
 type DeliveryFormProps = {
 	deliveryForm: DeliveryFormValues;

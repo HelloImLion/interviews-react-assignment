@@ -1,3 +1,6 @@
-import { PaginatedRequestDTO } from "./PaginatedRequestDTO";
+import { PaginatedRequest } from "../PaginatedRequest";
 
-export type ProductsRequestDTO = PaginatedRequestDTO;
+export type ProductsRequestDTO = {
+	q?: string;
+	category?: string;
+} & PaginatedRequest;

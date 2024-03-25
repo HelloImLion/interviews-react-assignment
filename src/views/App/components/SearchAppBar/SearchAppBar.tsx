@@ -1,7 +1,5 @@
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import SearchIcon from "@mui/icons-material/Search";
 import { Badge, IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -9,6 +7,8 @@ import { useCart } from "../../../../context/useCart";
 import { Search, SearchIconWrapper, StyledInputBase } from "./styled";
 import { Dispatch, SetStateAction } from "react";
 import { useDebounce } from "../../../../hooks/useDebounce";
+import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
+import { TypographyWrapper } from "../../../../components/TypographyWrapper/TypographyWrapper";
 
 type SearchBarProps = {
 	setSearchValue: Dispatch<SetStateAction<string>>;
@@ -20,11 +20,11 @@ export default function SearchAppBar({ setSearchValue, setOpenModalState }: Sear
 	const { debounce } = useDebounce({ msDelay: 500 });
 
 	return (
-		<Box>
+		<BoxWrapper>
 			<AppBar position="relative">
 				<Toolbar>
-					<Box sx={{ maxWidth: 0, maxHeight: 0, overflow: "hidden" }}></Box>
-					<Typography
+					<BoxWrapper style={{ maxWidth: 0, maxHeight: 0, overflow: "hidden" }} />
+					<TypographyWrapper
 						variant="h6"
 						noWrap
 						component="div"
@@ -37,7 +37,7 @@ export default function SearchAppBar({ setSearchValue, setOpenModalState }: Sear
 						}}
 					>
 						FreshCart Market
-					</Typography>
+					</TypographyWrapper>
 					<Search>
 						<SearchIconWrapper>
 							<SearchIcon />
@@ -50,27 +50,29 @@ export default function SearchAppBar({ setSearchValue, setOpenModalState }: Sear
 							}}
 						/>
 					</Search>
-					<Box
-						display="flex"
-						flexDirection="row"
-						mx={2}
+					<BoxWrapper
+						style={{
+							display: "flex",
+							flexDirection: "row",
+							margin: "auto 2rem",
+						}}
 					>
-						<Typography
+						<TypographyWrapper
 							variant="h6"
 							noWrap
 							component="div"
 							mr={2}
 						>
 							Total:
-						</Typography>
-						<Typography
+						</TypographyWrapper>
+						<TypographyWrapper
 							variant="h6"
 							noWrap
 							component="div"
 						>
 							$ {(cart.totalPrice || 0).toFixed(2)}
-						</Typography>
-					</Box>
+						</TypographyWrapper>
+					</BoxWrapper>
 					<Badge
 						badgeContent={cart.totalItems || 0}
 						color="secondary"
@@ -81,6 +83,6 @@ export default function SearchAppBar({ setSearchValue, setOpenModalState }: Sear
 					</Badge>
 				</Toolbar>
 			</AppBar>
-		</Box>
+		</BoxWrapper>
 	);
 }

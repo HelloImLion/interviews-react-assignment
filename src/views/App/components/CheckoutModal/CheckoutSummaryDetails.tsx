@@ -1,8 +1,8 @@
 import { CheckoutItem } from "./CheckoutItem";
 import { OrderDetailsList } from "./OrderDetailsList";
-import { DeliveryFormValues } from "../../../types/DeliveryFormValues";
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
-import { TypographyWrapper } from "../../../components/TypographyWrapper/TypographyWrapper";
+import { DeliveryFormValues } from "../../../../types/DeliveryFormValues";
+import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
+import { TypographyWrapper } from "../../../../components/TypographyWrapper/TypographyWrapper";
 
 type CheckoutSummaryDetailsProps = {
 	deliveryForm: DeliveryFormValues;

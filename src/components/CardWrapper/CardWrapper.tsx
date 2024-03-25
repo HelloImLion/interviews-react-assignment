@@ -1,5 +1,6 @@
 import { Card, CardMedia, CardContent, Typography, CardActions, Box } from "@mui/material";
 import { ReactNode } from "react";
+import { TypographyWrapper } from "../TypographyWrapper/TypographyWrapper";
 
 export type CardWrapperProps = {
 	key: string;
@@ -27,27 +28,27 @@ export function CardWrapper(props: CardWrapperProps) {
 				image={imageUrl}
 			/>
 			<CardContent>
-				<Typography
+				<TypographyWrapper
 					gutterBottom
 					variant="h6"
 					component="div"
 				>
 					{title}
-				</Typography>
-				<Typography
+				</TypographyWrapper>
+				<TypographyWrapper
 					variant="body2"
 					color="text.secondary"
 				>
 					{description}
-				</Typography>
+				</TypographyWrapper>
 			</CardContent>
 			<CardActions>
-				<Typography
+				<TypographyWrapper
 					variant="h6"
 					component="div"
 				>
 					{actionDescription}
-				</Typography>
+				</TypographyWrapper>
 				<Box flexGrow={1} />
 				{renderAction()}
 			</CardActions>
