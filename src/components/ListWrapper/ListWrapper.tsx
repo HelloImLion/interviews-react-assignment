@@ -1,4 +1,5 @@
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { CSSProperties } from "react";
 
 type ListItemWrapperProps = {
 	label: string;
@@ -8,11 +9,15 @@ type ListItemWrapperProps = {
 
 export type ListWrapperProps = {
 	items: ListItemWrapperProps[];
+	containerStyle?: CSSProperties;
 };
 
-export function ListWrapper({ items }: ListWrapperProps) {
+export function ListWrapper({ items, containerStyle }: ListWrapperProps) {
 	return (
-		<List className="list-wrapper">
+		<List
+			className="list-wrapper"
+			sx={containerStyle}
+		>
 			{items.map(({ label, isActive, onClick }) => (
 				<ListItem
 					className={"list-wrapper__list-item"}

@@ -1,9 +1,8 @@
 import { ConnectedProducts } from "./Products.tsx";
 import { CssBaseline } from "@mui/material";
 import { Categories } from "./Categories.tsx";
-import { CartProvider } from "../../context/useCart.tsx";
 import SearchAppBar from "./components/SearchAppBar/SearchAppBar.tsx";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { CheckoutModal } from "./components/CheckoutModal/CheckoutModal.tsx";
 import { OrderStateModal } from "./components/OrderStateModal/OrderStateModal.tsx";
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper.tsx";
@@ -15,7 +14,7 @@ function App() {
 	const [openModalState, setOpenModalState] = useState<string>("");
 
 	return (
-		<CartProvider>
+		<Fragment>
 			<BoxWrapper
 				style={{
 					display: "flex",
@@ -33,6 +32,7 @@ function App() {
 						flex: 1,
 						display: "flex",
 						flexDirection: "row",
+						marginTop: "4rem",
 					}}
 				>
 					<Categories
@@ -56,7 +56,7 @@ function App() {
 				onClose={() => setOpenModalState("")}
 			/>
 			<OrderStateModal />
-		</CartProvider>
+		</Fragment>
 	);
 }
 

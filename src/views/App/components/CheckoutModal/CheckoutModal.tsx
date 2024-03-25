@@ -6,9 +6,8 @@ import { CheckoutSummaryDetails } from "./CheckoutSummaryDetails";
 import { TextButton } from "../../../../components/TextButton/TextButton";
 import { CheckoutBillingLoading } from "./CheckoutBillingLoading";
 import { CheckoutModalPages } from "../../../../enum/CheckoutModalPages";
-import { UseCheckoutState, useCheckout } from "./hooks/useCheckout";
+import { useCheckout } from "./hooks/useCheckout";
 import useValidation from "../../../../hooks/useValidation";
-import { ValidationError } from "joi";
 import { deliveryFormSchema } from "../../../../validation/deliveryFormSchema";
 
 type CheckoutModalProps = {
@@ -28,40 +27,25 @@ function getNextCheckoutPage(currentPage: CheckoutModalPages) {
 	return CheckoutModalPages.OrderDetails;
 }
 
-function getNextPageComponent({
-	currentPage,
-	setDeliveryForm,
-	deliveryForm,
-	errors,
-}: UseCheckoutState & { errors: ValidationError | null }) {
+function getNextButtonTitle(currentPage: CheckoutModalPages) {
 	switch (currentPage) {
-		case CheckoutModalPages.OrderDetails:
-			return <OrderDetailsList />;
-		case CheckoutModalPages.DeliveryForm:
-			return (
-				<DeliveryForm
-					setDeliveryForm={setDeliveryForm}
-					deliveryForm={deliveryForm}
-					errors={errors}
-				/>
-			);
-		case CheckoutModalPages.Summary:
-			return <CheckoutSummaryDetails deliveryForm={deliveryForm} />;
 		case CheckoutModalPages.Billing:
-			return <CheckoutBillingLoading />;
+			return "";
+		case CheckoutModalPages.Summary:
+			return "Buy";
 	}
+	return "Next";
 }
 
 export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 	const { validate, errors, resetErrors } = useValidation({ validationSchema: deliveryFormSchema });
 
-	const checkoutState = useCheckout({ isOpen, resetErrors });
-	const { setCurrentPage, currentPage } = checkoutState;
+	const { setCurrentPage, currentPage, deliveryForm, setDeliveryForm } = useCheckout({ isOpen, resetErrors });
 
 	function handleNextPage() {
 		let canGoToNextPage = true;
 		if (currentPage === CheckoutModalPages.DeliveryForm) {
-			canGoToNextPage = validate(checkoutState.deliveryForm);
+			canGoToNextPage = validate(deliveryForm);
 		}
 		if (canGoToNextPage) {
 			setCurrentPage(getNextCheckoutPage(currentPage));
@@ -72,12 +56,26 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 		<ModalWrapper
 			isOpen={isOpen}
 			onClose={onClose}
-			title="Order Details"
+			title="Checkout"
 		>
 			<Fragment>
-				{getNextPageComponent({ ...checkoutState, errors })}
+				{currentPage === CheckoutModalPages.OrderDetails ? (
+					<OrderDetailsList />
+				) : currentPage === CheckoutModalPages.DeliveryForm ? (
+					<DeliveryForm
+						deliveryForm={deliveryForm}
+						setDeliveryForm={setDeliveryForm}
+						errors={errors}
+					/>
+				) : currentPage === CheckoutModalPages.Summary ? (
+					<CheckoutSummaryDetails deliveryForm={deliveryForm} />
+				) : currentPage === CheckoutModalPages.Billing ? (
+					<CheckoutBillingLoading />
+				) : (
+					<div />
+				)}
 				<div style={{ float: "right" }}>
-					<TextButton onClick={handleNextPage}>Next</TextButton>
+					<TextButton onClick={handleNextPage}>{getNextButtonTitle(currentPage)}</TextButton>
 				</div>
 			</Fragment>
 		</ModalWrapper>

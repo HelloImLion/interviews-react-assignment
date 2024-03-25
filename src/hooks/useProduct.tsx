@@ -5,6 +5,7 @@ import { ProductsRequestDTO } from "../types/dto/ProductsRequestDTO.ts";
 import { usePagination } from "./usePagination.tsx";
 import { PaginatedResult } from "../types/PaginatedResult.ts";
 import { ProductSearchRequestParams } from "../types/ProductSearchRequestParams.tsx";
+import { useSnackbar } from "../context/useSnackbar.tsx";
 
 export type UseProductProps = {
 	addProductToCart: (cart: AddToCartRequestDTO) => Promise<void>;
@@ -65,6 +66,7 @@ export function useProduct({
 		setData: setProducts,
 		fetchData,
 	} = usePagination({ fetchDataFunction: fetchProducts, chunkSize, requestParams: productSearchParams });
+	const { sendMessage } = useSnackbar();
 
 	useEffect(() => {
 		if (products === null) {
@@ -73,13 +75,19 @@ export function useProduct({
 	}, [products]);
 
 	useEffect(() => {
+		console.debug(products);
 		setProducts(null);
 	}, [productSearchParams]);
 
 	async function addToCart(productId: number, quantity: number) {
-		setProducts((products) => startProductLoadingState(products ?? [], productId));
-		await addProductToCart({ productId, quantity });
-		setProducts((products) => endProductLoadingState(products ?? [], { idToFind: productId, quantity }));
+		try {
+			setProducts((products) => startProductLoadingState(products ?? [], productId));
+			await addProductToCart({ productId, quantity });
+		} catch {
+			sendMessage({ message: "Error while trying to add product to cart ", variant: "error" });
+		} finally {
+			setProducts((products) => endProductLoadingState(products ?? [], { idToFind: productId, quantity }));
+		}
 	}
 
 	function fetchNewProducts() {

@@ -5,6 +5,8 @@ export const deliveryFormSchema = Joi.object().keys({
 	address: Joi.string().required(),
 	city: Joi.string().required(),
 	state: Joi.string().required(),
-	zipCode: Joi.string().required(),
+	zipCode: Joi.string().regex(/^\d+$/).required().messages({
+		"string.pattern.base": "Zip Code must have only numeric values",
+	}),
 	deliverySlot: Joi.string().required(),
 });

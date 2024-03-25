@@ -56,6 +56,7 @@ export const Products = ({ fetchProducts, productSearchParams }: ProductsProps) 
 	useEffect(() => {
 		if (isAtEnd) {
 			fetchNewProducts();
+			setIsAtEnd(false);
 		}
 	}, [isAtEnd, fetchNewProducts]);
 

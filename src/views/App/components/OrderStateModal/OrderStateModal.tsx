@@ -24,10 +24,10 @@ export function OrderStateModal() {
 			<div>
 				<TypographyWrapper>
 					{orderState === "success"
-						? "Your payment was processed and the order completed. Your order id is:"
+						? "Your payment was processed and the order completed."
 						: "Error while trying to process payment"}
 				</TypographyWrapper>
-				<TypographyWrapper>{orderId}</TypographyWrapper>
+				<TypographyWrapper>Your order id is: {orderId}</TypographyWrapper>
 			</div>
 		</ModalWrapper>
 	);

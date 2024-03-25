@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PaginatedRequest } from "../types/PaginatedRequest";
 import { PaginatedResult } from "../types/PaginatedResult";
+import { useSnackbar } from "../context/useSnackbar";
 
 interface UsePaginationProps<T, K> {
 	fetchDataFunction: (paginationParams: PaginatedRequest, requestParams?: K) => Promise<PaginatedResult<T>>;
@@ -11,6 +12,7 @@ interface UsePaginationProps<T, K> {
 export function usePagination<T, K>({ fetchDataFunction, chunkSize, requestParams }: UsePaginationProps<T, K>) {
 	const [data, setData] = useState<T[] | null>(null);
 	const [hasMore, setHasMore] = useState<boolean>(true);
+	const { sendMessage } = useSnackbar();
 
 	useEffect(() => {
 		if (data === null) {
@@ -23,20 +25,26 @@ export function usePagination<T, K>({ fetchDataFunction, chunkSize, requestParam
 	}, [data, hasMore]);
 
 	async function fetchData(): Promise<T[]> {
-		if (hasMore === false) {
+		try {
+			if (hasMore === false) {
+				return data ?? [];
+			}
+			const { items, hasMore: hasMoreResult } = await fetchDataFunction(
+				{
+					page: (data?.length ?? 0) / chunkSize,
+					limit: chunkSize,
+				},
+				requestParams
+			);
+			setHasMore(hasMoreResult);
+			const newData = [...(data ?? []), ...items];
+			setData(newData);
+			return newData;
+		} catch {
+			sendMessage({ message: "Error while trying to fetch new products", variant: "error" });
+			setData(data ?? []);
 			return data ?? [];
 		}
-		const { items, hasMore: hasMoreResult } = await fetchDataFunction(
-			{
-				page: (data?.length ?? 0) / chunkSize,
-				limit: chunkSize,
-			},
-			requestParams
-		);
-		setHasMore(hasMoreResult);
-		const newData = [...(data ?? []), ...items];
-		setData(newData);
-		return newData;
 	}
 
 	return {

@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography, CircularProgress } from "@mui/material";
+import { IconButton, CircularProgress } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { ProductCardProps } from "./ProductCard.tsx";

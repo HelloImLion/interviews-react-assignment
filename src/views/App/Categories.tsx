@@ -19,13 +19,20 @@ export const Categories = ({ setActiveCategory, activeCategory }: CategoriesProp
 				borderRight: "1px solid grey",
 			}}
 		>
-			<ListWrapper
-				items={categories.map((s) => ({
-					label: s,
-					onClick: () => setActiveCategory(s),
-					isActive: s === activeCategory,
-				}))}
-			/>
+			<BoxWrapper
+				style={{
+					position: "fixed",
+				}}
+			>
+				<ListWrapper
+					containerStyle={{ width: drawerWidth }}
+					items={categories.map((s) => ({
+						label: s,
+						onClick: () => setActiveCategory(s),
+						isActive: s === activeCategory,
+					}))}
+				/>
+			</BoxWrapper>
 		</BoxWrapper>
 	);
 };

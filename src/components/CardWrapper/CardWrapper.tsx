@@ -1,4 +1,4 @@
-import { Card, CardMedia, CardContent, Typography, CardActions, Box } from "@mui/material";
+import { Card, CardMedia, CardContent, CardActions, Box } from "@mui/material";
 import { ReactNode } from "react";
 import { TypographyWrapper } from "../TypographyWrapper/TypographyWrapper";
 

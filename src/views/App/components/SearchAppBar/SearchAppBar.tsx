@@ -20,10 +20,17 @@ export default function SearchAppBar({ setSearchValue, setOpenModalState }: Sear
 	const { debounce } = useDebounce({ msDelay: 500 });
 
 	return (
-		<BoxWrapper>
+		<BoxWrapper
+			style={{
+				position: "fixed",
+				width: "100vw",
+				top: 0,
+				left: 0,
+				zIndex: 100,
+			}}
+		>
 			<AppBar position="relative">
 				<Toolbar>
-					<BoxWrapper style={{ maxWidth: 0, maxHeight: 0, overflow: "hidden" }} />
 					<TypographyWrapper
 						variant="h6"
 						noWrap
@@ -77,7 +84,10 @@ export default function SearchAppBar({ setSearchValue, setOpenModalState }: Sear
 						badgeContent={cart.totalItems || 0}
 						color="secondary"
 					>
-						<IconButton onClick={() => setOpenModalState("checkout")}>
+						<IconButton
+							disabled={cart.totalItems === 0}
+							onClick={() => cart.totalItems > 0 && setOpenModalState("checkout")}
+						>
 							<ShoppingCartIcon />
 						</IconButton>
 					</Badge>
