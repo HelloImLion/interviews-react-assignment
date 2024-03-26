@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { TypographyWrapper } from "../TypographyWrapper/TypographyWrapper";
 
 export type CardWrapperProps = {
-	key: string;
+	keyValue: string;
 	imageUrl: string;
 	title: string;
 	description: string;
@@ -17,7 +17,7 @@ export function CardWrapper(props: CardWrapperProps) {
 
 	return (
 		<Card
-			key={props.key}
+			key={props.keyValue}
 			style={{
 				width: "100%",
 			}}

@@ -72,8 +72,9 @@ export const Products = ({ fetchProducts, productSearchParams }: ProductsProps) 
 				spacing={2}
 				p={2}
 			>
-				{products.map((product) => (
+				{products.map((product, i) => (
 					<Grid
+						key={"products_" + i}
 						item
 						xs={4}
 					>

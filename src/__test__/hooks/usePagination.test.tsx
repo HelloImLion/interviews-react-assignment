@@ -5,12 +5,16 @@
 
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { usePagination } from "../../hooks/usePagination";
+import { SnackbarProvider } from "../../context/useSnackbar";
+import { PropsWithChildren } from "react";
 
 describe("Use Pagination Test", () => {
 	it("Should not call fetchData if hasMore state is equal to false", async () => {
 		const mockFetchDataFunction = jest.fn().mockReturnValue({ items: [], hasMore: false });
-		const { result } = renderHook(() =>
-			usePagination({ fetchDataFunction: mockFetchDataFunction, chunkSize: 12, requestParams: null })
+		const wrapper = ({ children }: PropsWithChildren) => <SnackbarProvider>{children}</SnackbarProvider>;
+		const { result } = renderHook(
+			() => usePagination({ fetchDataFunction: mockFetchDataFunction, chunkSize: 12, requestParams: null }),
+			{ wrapper }
 		);
 
 		act(() => {
@@ -25,12 +29,15 @@ describe("Use Pagination Test", () => {
 	});
 	it("Should merge both data and items array when hasMode is not false", async () => {
 		const mockFetchDataFunction = jest.fn().mockReturnValue({ items: ["Hello"], hasMore: true });
-		const { result } = renderHook(() =>
-			usePagination<string, null>({
-				fetchDataFunction: mockFetchDataFunction,
-				chunkSize: 12,
-				requestParams: null,
-			})
+		const wrapper = ({ children }: PropsWithChildren) => <SnackbarProvider>{children}</SnackbarProvider>;
+		const { result } = renderHook(
+			() =>
+				usePagination<string, null>({
+					fetchDataFunction: mockFetchDataFunction,
+					chunkSize: 12,
+					requestParams: null,
+				}),
+			{ wrapper }
 		);
 
 		let firstIterationResult: string[];

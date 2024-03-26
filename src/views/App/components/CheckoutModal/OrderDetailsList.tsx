@@ -11,8 +11,9 @@ export function OrderDetailsList() {
 
 	return (
 		<div>
-			{cart.items.map(({ product, quantity }) => (
+			{cart.items.map(({ product, quantity }, i) => (
 				<CheckoutItem
+					key={"checkout-item_" + i}
 					name={product.name}
 					description={getDescriptionFromItem({ product, quantity })}
 				/>

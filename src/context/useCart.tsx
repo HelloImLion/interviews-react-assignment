@@ -33,8 +33,7 @@ export function CartProvider({ children }: React.PropsWithChildren) {
 		try {
 			const cart = await fetchCart();
 			setCart(cart);
-		} catch (err) {
-			console.debug(err);
+		} catch {
 			setCart(getBaseCart());
 		}
 	}

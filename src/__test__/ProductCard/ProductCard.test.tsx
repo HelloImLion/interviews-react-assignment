@@ -1,6 +1,8 @@
 import { render } from "@testing-library/react";
 import { ProductCard } from "../../views/App/components/ProductCard/ProductCard";
 import { Product } from "../../types/Product";
+import { CartProvider } from "../../context/useCart";
+import { SnackbarProvider } from "../../context/useSnackbar";
 
 const baseMockProduct: Product = {
 	id: 0,
@@ -17,10 +19,14 @@ describe("ProductCard", () => {
 		const mockAddToCart = jest.fn();
 
 		const component = render(
-			<ProductCard
-				addToCart={mockAddToCart}
-				product={baseMockProduct}
-			/>
+			<SnackbarProvider>
+				<CartProvider>
+					<ProductCard
+						addToCart={mockAddToCart}
+						product={baseMockProduct}
+					/>
+				</CartProvider>
+			</SnackbarProvider>
 		);
 
 		const productNameElement = component.getByText(baseMockProduct.name);

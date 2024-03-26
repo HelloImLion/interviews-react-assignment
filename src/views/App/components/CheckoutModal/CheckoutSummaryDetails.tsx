@@ -25,8 +25,9 @@ export function CheckoutSummaryDetails({ deliveryForm }: CheckoutSummaryDetailsP
 			<TypographyWrapper style={{ fontWeight: 600, marginBottom: "0.5rem", marginTop: "1rem" }}>
 				Address Info
 			</TypographyWrapper>
-			{Object.entries(deliveryForm).map(([name, value]) => (
+			{Object.entries(deliveryForm).map(([name, value], index) => (
 				<CheckoutItem
+					key={"checkout-item_" + index}
 					name={formValuesDictionary[name]}
 					description={value}
 				/>

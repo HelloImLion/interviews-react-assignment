@@ -75,7 +75,6 @@ export function useProduct({
 	}, [products]);
 
 	useEffect(() => {
-		console.debug(products);
 		setProducts(null);
 	}, [productSearchParams]);
 

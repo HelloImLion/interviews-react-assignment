@@ -11,7 +11,7 @@ describe("FetchProducts", () => {
 		const searchValues = { activeCategory: "", searchValue: "" };
 		mockAxios.get.mockResolvedValueOnce({ data: { products: [] } });
 		await fetchProducts(requestParams, searchValues);
-		expect(axios.get).toHaveBeenCalledWith("/products", {
+		expect(axios.get).toHaveBeenCalledWith("http://localhost:5173/products", {
 			params: { ...requestParams, q: searchValues.searchValue, category: searchValues.activeCategory },
 		});
 	});

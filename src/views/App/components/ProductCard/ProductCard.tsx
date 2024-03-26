@@ -10,7 +10,7 @@ export interface ProductCardProps {
 export function ProductCard({ product, addToCart }: ProductCardProps) {
 	return (
 		<CardWrapper
-			key={product.id.toString()}
+			keyValue={product.id.toString()}
 			imageUrl={product.imageUrl}
 			title={product.name}
 			actionDescription={"$" + product.price}

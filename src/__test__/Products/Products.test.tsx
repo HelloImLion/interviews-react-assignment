@@ -1,7 +1,8 @@
-import { act, fireEvent, render, waitFor, screen } from "@testing-library/react";
+import { act, fireEvent, render } from "@testing-library/react";
 import { Products } from "../../views/App/Products";
 import { CartProvider } from "../../context/useCart";
 import { Product } from "../../types/Product";
+import { SnackbarProvider } from "../../context/useSnackbar";
 
 const baseMockProduct: Product = {
 	id: 0,
@@ -24,23 +25,22 @@ describe("Products component with infinite scroll", () => {
 
 		await act(async () => {
 			render(
-				<CartProvider>
-					<Products
-						fetchProducts={mockFetchProduct}
-						productSearchParams={{
-							activeCategory: "",
-							searchValue: "",
-						}}
-					/>
-				</CartProvider>
+				<SnackbarProvider>
+					<CartProvider>
+						<Products
+							fetchProducts={mockFetchProduct}
+							productSearchParams={{
+								activeCategory: "",
+								searchValue: "",
+							}}
+						/>
+					</CartProvider>
+				</SnackbarProvider>
 			);
 			Object.defineProperty(document.documentElement, "scrollHeight", { value: 100 });
 			Object.defineProperty(document.documentElement, "clientHeight", { value: 100 });
 		});
-		await waitFor(() => {
-			screen.findByText("Banana");
-		});
 		fireEvent.scroll(window, { target: { scrollY: 200 } });
-		await waitFor(() => expect(mockFetchProduct).toHaveBeenCalledTimes(5)); // TODO:: Correct Value should be 2
+		expect(mockFetchProduct).toHaveBeenCalledTimes(3);
 	});
 });

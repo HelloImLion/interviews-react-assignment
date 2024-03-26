@@ -36,8 +36,11 @@ export function RadioGroupInput({ radioOptions, activeOption, onChange, fieldNam
 				value={activeOption}
 				onChange={(e) => onChange({ value: e.target.value, field: fieldName })}
 			>
-				{radioOptions.map((props) => (
-					<RadioInput {...props} />
+				{radioOptions.map((props, i) => (
+					<RadioInput
+						{...props}
+						key={"radio-group-input_" + i}
+					/>
 				))}
 			</RadioGroup>
 		</FormControl>
